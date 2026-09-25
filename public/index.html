@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator RCA Premium</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <i data-lucide="shield-check" class="logo-icon"></i>
+            <h1>Calculator RCA</h1>
+            <p>Obține cele mai bune oferte în câteva secunde.</p>
+        </header>
+
+        <main>
+            <div id="errorContainer" class="hidden" style="background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-weight: 500;"></div>
+
+            <form id="rcaForm" class="glass-panel">
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button type="button" id="autoFillBtn" class="btn-back" style="color: var(--primary); border-color: rgba(59, 130, 246, 0.4); display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(59, 130, 246, 0.12); font-weight: 500;">
+                        <i data-lucide="shuffle" class="icon-small"></i> Generează Date Random
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h2><i data-lucide="user"></i> Date Șofer</h2>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="lastName">Nume</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Ex: Popescu" value="Pop" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="firstName">Prenume</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Ex: Ion" value="Vasile" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="taxId">CNP</label>
+                            <input type="text" id="taxId" name="taxId" placeholder="Ex: 1900101123456" value="1910716120012" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="idNumber">Serie și Număr CI</label>
+                            <input type="text" id="idNumber" name="idNumber" placeholder="Ex: BX123456" value="CJ123456" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="licenseIssueDate">Data obținerii permisului</label>
+                            <input type="date" id="licenseIssueDate" name="licenseIssueDate" value="2015-03-10" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section mt-4">
+                    <h2><i data-lucide="car"></i> Date Mașină</h2>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="brand">Marcă</label>
+                            <input type="text" id="brand" name="brand" placeholder="Ex: Volkswagen" value="Volkswagen" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="model">Model</label>
+                            <input type="text" id="model" name="model" placeholder="Ex: Golf" value="Golf" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="licensePlate">Număr Înmatriculare</label>
+                            <input type="text" id="licensePlate" name="licensePlate" placeholder="Ex: B10ABC" value="CJ10LIH" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="vin">Serie Șasiu (VIN)</label>
+                            <input type="text" id="vin" name="vin" placeholder="Ex: WVWZZZ3CZWE123456" value="WVWZZZ3CZWE123456" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="year">An de Fabricație</label>
+                            <input type="number" id="year" name="year" placeholder="Ex: 2020" value="2020" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="firstRegistration">Prima Înmatriculare</label>
+                            <input type="date" id="firstRegistration" name="firstRegistration" value="2020-05-15" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="engineDisplacement">Capacitate Cilindrică (cm3)</label>
+                            <input type="number" id="engineDisplacement" name="engineDisplacement" placeholder="Ex: 1598" value="1598" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="enginePower">Putere Motor (kW)</label>
+                            <input type="number" id="enginePower" name="enginePower" placeholder="Ex: 85" value="85" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="fuelType">Combustibil</label>
+                            <select id="fuelType" name="fuelType" required>
+                                <option value="diesel" selected>Diesel</option>
+                                <option value="gasoline">Benzină</option>
+                                <option value="electric">Electric</option>
+                                <option value="hybrid">Hybrid</option>
+                                <option value="lpg">GPL</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="vehicleType">Tip Vehicul</label>
+                            <select id="vehicleType" name="vehicleType" required>
+                                <option value="M1" selected>M1 - Autoturism</option>
+                                <option value="N1">N1 - Utilitară ușoară (&lt;3.5t)</option>
+                                <option value="N2">N2 - Camion (3.5t - 12t)</option>
+                                <option value="N3">N3 - TIR (&gt;12t)</option>
+                                <option value="L3e">L3e - Motocicletă</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="seats">Număr Locuri</label>
+                            <input type="number" id="seats" name="seats" placeholder="Ex: 5" min="1" max="100" value="5" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="totalWeight">Masă Totală (kg)</label>
+                            <input type="number" id="totalWeight" name="totalWeight" placeholder="Ex: 1750" min="1" value="1750" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="currentMileage">Kilometraj Actual (km)</label>
+                            <input type="number" id="currentMileage" name="currentMileage" placeholder="Ex: 150000" min="0" value="150000" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section mt-4">
+                    <h2><i data-lucide="map-pin"></i> Adresă</h2>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="county">Județ (cod)</label>
+                            <input type="text" id="county" name="county" placeholder="Ex: B, CJ, IS, TM" maxlength="4" value="CJ" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="city">Localitate</label>
+                            <input type="text" id="city" name="city" placeholder="Ex: Bucuresti" value="Cluj-Napoca" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="street">Stradă</label>
+                            <input type="text" id="street" name="street" placeholder="Ex: Calea Victoriei" value="Principala" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="houseNumber">Număr</label>
+                            <input type="text" id="houseNumber" name="houseNumber" placeholder="Ex: 10" value="19" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="postcode">Cod Poștal</label>
+                            <input type="text" id="postcode" name="postcode" placeholder="Ex: 010061" maxlength="6" value="400356" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section mt-4">
+                    <h2><i data-lucide="calendar"></i> Valabilitate Poliță</h2>
+                    <div class="input-group">
+                        <label for="startDate">Data de Început</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="calculateBtn">
+                    <span>Calculează Ofertele</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </form>
+
+            <div id="loadingState" class="hidden">
+                <div class="spinner"></div>
+                <p>Se interoghează asiguratorii...<br>Așteaptă câteva momente.</p>
+            </div>
+
+            <div id="resultsArea" class="hidden">
+                <div class="results-header">
+                    <h2>Oferte Disponibile <span id="offersCount" class="badge">0</span></h2>
+                </div>
+                
+                <!-- Rezumat Date -->
+                <div class="data-summary glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--text-muted);"><i data-lucide="clipboard-list" class="icon-small"></i> Datele Tale</h3>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="button" class="btn-back" id="backToFormBtn">
+                                <i data-lucide="edit" class="icon-small"></i> Editează Datele
+                            </button>
+                            <button type="button" class="btn-back" id="goHomeBtn" style="color: var(--primary); border-color: rgba(59, 130, 246, 0.3);">
+                                <i data-lucide="home" class="icon-small"></i> Home
+                            </button>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.95rem;">
+                        <div>
+                            <span style="color: var(--text-muted);">Șofer:</span> <strong id="summaryDriver"></strong><br>
+                            <span style="color: var(--text-muted);">CNP:</span> <strong id="summaryCnp"></strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-muted);">Mașină:</span> <strong id="summaryCar"></strong><br>
+                            <span style="color: var(--text-muted);">VIN:</span> <strong id="summaryVin"></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="offersList" class="offers-grid">
+                    <!-- Cards will be injected here via JS -->
+                </div>
+            </div>
+
+            <!-- Modal for Success/PDF -->
+            <div id="successModal" class="modal hidden">
+                <div class="modal-content glass-panel modal-lg">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 12px; text-align: left;">
+                            <i data-lucide="check-circle" class="success-icon" style="margin: 0; width: 42px; height: 42px;"></i>
+                            <div>
+                                <h2 style="margin: 0; font-size: 1.4rem;">Poliță Emisă cu Succes!</h2>
+                                <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Oferta <strong id="modalOfferBadge" style="color: var(--accent);"></strong> a fost generată.</p>
+                            </div>
+                        </div>
+                        <button type="button" id="closeModalCrossBtn" style="background: transparent; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; padding: 4px; line-height: 1;">&times;</button>
+                    </div>
+
+                    <!-- PDF Action Buttons -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.2rem 0 1rem 0;">
+                        <a id="viewPdfBtn" href="#" target="_blank" class="btn-primary" style="margin: 0; text-decoration: none; font-size: 0.95rem; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <i data-lucide="external-link" class="icon-small"></i> Deschide PDF în Tab Nou
+                        </a>
+                        <a id="downloadPdfBtn" href="#" download="Polita_RCA.pdf" class="btn-secondary" style="margin: 0; text-decoration: none; font-size: 0.95rem; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border-color: rgba(16, 185, 129, 0.4); color: var(--accent);">
+                            <i data-lucide="download" class="icon-small"></i> Descarcă Polița (PDF)
+                        </a>
+                    </div>
+
+                    <!-- PDF In-modal Live Preview Frame -->
+                    <div id="pdfViewerContainer" style="margin-top: 1rem; width: 100%; height: 480px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: #0f172a;">
+                        <iframe id="pdfPreviewFrame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+                    </div>
+
+                    <button class="btn-secondary" id="closeModalBtn" style="margin-top: 1rem;">Închide Fereastra</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize lucide icons
+        lucide.createIcons();
+        // Set default start date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const yyyy = tomorrow.getFullYear();
+        const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const dd = String(tomorrow.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        const startDateEl = document.getElementById('startDate');
+        startDateEl.min = dateStr;
+        startDateEl.value = dateStr;
+    </script>
+</body>
+</html>

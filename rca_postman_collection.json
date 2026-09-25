@@ -1,0 +1,226 @@
+{
+  "info": {
+    "name": "RCA API - Life Is Hard",
+    "description": "Pas 1: Autentificare\nPas 2: Creare oferta pentru toti cei 11 asiguratori",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "https://rca-qa.api.lifeishard.ro", "type": "string" },
+    { "key": "token", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Pas 1 - Autentificare",
+      "item": [
+        {
+          "name": "POST /auth - Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.token) {",
+                  "        pm.collectionVariables.set('token', jsonData.data.token);",
+                  "        console.log('Token salvat!');",
+                  "    }",
+                  "}",
+                  "pm.test('Auth OK', function() { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n    \"account\": \"test\",\n    \"password\": \"test\"\n}" },
+            "url": { "raw": "{{base_url}}/auth", "host": ["{{base_url}}"], "path": ["auth"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pas 2 - Creare Oferta",
+      "item": [
+        {
+          "name": "POST /offer - Allianz",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"allianz\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Asirom",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"asirom\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Axeria",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"axeria\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Generali",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"generali\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        },\n        \"additionalData\": {\n            \"product\": {\n                \"vehicle\": {\n                    \"expirationDatePti\": \"2027-06-15\"\n                }\n            }\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Groupama",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"groupama\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Hellas Autonom",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"hellas_autonom\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Hellas NextIns",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"hellas_nextins\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Omniasig",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"omniasig\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Grawe",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"grawe\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - Eazy Insure",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"eazy_insure\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        },
+        {
+          "name": "POST /offer - DallBogg",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Token", "value": "{{token}}" },
+              { "key": "Content-Language", "value": "ro" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"provider\": {\n        \"organization\": {\n            \"businessName\": \"dallbogg\"\n        }\n    },\n    \"product\": {\n        \"motor\": {\n            \"startDate\": \"2026-08-25\",\n            \"termTime\": 12,\n            \"installmentCount\": 1\n        },\n        \"policyholder\": {\n            \"lastName\": \"Pop\",\n            \"firstName\": \"Vasile\",\n            \"taxId\": \"1910716120012\",\n            \"email\": \"email@email.ro\",\n            \"mobileNumber\": \"0744444444\",\n            \"identification\": {\n                \"idType\": \"CI\",\n                \"idNumber\": \"CJ123456\"\n            },\n            \"drivingLicense\": {\n                \"issueDate\": \"2015-03-10\"\n            },\n            \"address\": {\n                \"county\": \"CJ\",\n                \"city\": \"Cluj-Napoca\",\n                \"cityCode\": 54984,\n                \"street\": \"Principala\",\n                \"houseNumber\": \"19\",\n                \"postcode\": \"400356\",\n                \"floor\": \"1\"\n            }\n        },\n        \"vehicle\": {\n            \"registrationType\": \"registered\",\n            \"licensePlate\": \"CJ10LIH\",\n            \"vin\": \"WVWZZZ3CZWE123456\",\n            \"vehicleType\": \"M1\",\n            \"brand\": \"Volkswagen\",\n            \"model\": \"Golf\",\n            \"yearOfConstruction\": \"2020\",\n            \"engineDisplacement\": 1598,\n            \"enginePower\": 85,\n            \"totalWeight\": 1750,\n            \"seats\": 5,\n            \"fuelType\": \"diesel\",\n            \"usageType\": \"personal\",\n            \"identification\": {\n                \"idNumber\": \"H123456\"\n            },\n            \"firstRegistration\": \"2020-05-15\",\n            \"currentMileage\": 150000\n        }\n    }\n}"
+            },
+            "url": { "raw": "{{base_url}}/offer", "host": ["{{base_url}}"], "path": ["offer"] }
+          }
+        }
+      ]
+    }
+  ]
+}
